@@ -1,4 +1,6 @@
-﻿namespace UmaMusumeToolbox.DataDownload
+﻿using UmaMusumeToolbox.DataDownload.Models;
+
+namespace UmaMusumeToolbox.DataDownload
 {
     public class RetrieveResource
     {
@@ -121,15 +123,25 @@
             catch (Exception ex)
             {
                 Console.WriteLine($"\nFailed to download from \"{url}\"");
-                Console.WriteLine($"File: {destinationFilepath}");
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Missing File: {destinationFilepath}");
+
+                // Output the pre-designated message instead of the standard exception message
+                if (ex.Message.Contains("The request was canceled due to the configured HttpClient.Timeout of"))
+                {
+                    Console.WriteLine($"The download for this file exceeded the {_settings.TimeoutFromMinutes} minute timeout. " +
+                        "Please either restart the program or increase the timeout limit\n");
+                }
+                else
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
                 if (ex.InnerException != null)
                 {
                     Console.WriteLine(ex.InnerException);
                     if (ex.InnerException.Message == "The response ended prematurely.")
                     {
-                        Console.WriteLine("\n>>>>>>>>>> POSSIBLE WORKAROUND <<<<<<<<<<");
+                        Console.WriteLine("\n>>>>>>>>>> POSSIBLE WORKAROUND <<<<<<<<<<\n");
                         Console.WriteLine("NOTE: This could be due to a 403 (forbidden) error killing the connection too early. " +
                             "This can be validated with an API platform like Postman with the URL posted above this message.");
                         Console.WriteLine("SUGGESTION: With a GET request, if Postman actually returns with a successful status code (like 200), " +

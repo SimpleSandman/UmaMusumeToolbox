@@ -1,4 +1,4 @@
-﻿namespace UmaMusumeToolbox.DataDownload
+﻿namespace UmaMusumeToolbox.DataDownload.Models
 {
     public sealed class Settings
     {

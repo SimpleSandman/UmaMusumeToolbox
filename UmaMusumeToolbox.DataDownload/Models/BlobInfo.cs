@@ -1,6 +1,6 @@
 ﻿namespace UmaMusumeToolbox.DataDownload.Models
 {
-    public class BlobInfo
+    public sealed class BlobInfo
     {
         public string BlobPath { get; set; }
         public string Hash { get; set; }
