@@ -5,7 +5,11 @@ I have recreated the [`data_download.py`](https://github.com/rockisch/umamusu-ut
 
 The only non-configurable option that's different from Rockisch's script is that I have this process set to 200 concurrent (asynchronous) downloads. This works in batches. Meaning it won't move onto the next 200 assets until the current batch has finished downloading.
 
-I'll work on a VS code configuration and make this Linux friendly once I finish what I need to do.
+# TODOs
+
+- Create a VS code configuration and make this Linux friendly.
+- Package a release version for each project.
+- Recreate the [`items_extract`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/items_extract.py) and [`story_extract`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/story_extract.py) scripts as separate projects within this solution.
 
 # Config File Explanation
 - IsDebugMode
