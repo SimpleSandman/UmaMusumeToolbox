@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
+using K4os.Compression.LZ4.Streams;
+
 using Microsoft.Extensions.Configuration;
 
 using UmaMusumeToolbox.DataDownload.Models;
@@ -17,10 +19,9 @@ namespace UmaMusumeToolbox.DataDownload
         {
             try
             {
-                // Build a config object, using env vars and JSON providers.
+                // Build a config object
                 IConfiguration config = new ConfigurationBuilder()
                     .AddJsonFile("appsettings.json")
-                    .AddEnvironmentVariables()
                     .Build();
 
                 _settings = config.GetRequiredSection("Settings").Get<Settings>();
@@ -34,7 +35,7 @@ namespace UmaMusumeToolbox.DataDownload
 
                 string connectionString = GetPlatformFriendlyFilepath(_settings.MetaDbFilepath);
                 List<BlobInfo> blobs = SqliteUtility.GetAllBlobInfo(connectionString);
-                List<Task> tasks = new List<Task>();
+                List<Task> downloadTasks = new List<Task>();
                 int numFiles = 0;
 
                 Console.WriteLine("Starting download...");
@@ -43,6 +44,7 @@ namespace UmaMusumeToolbox.DataDownload
                     Console.WriteLine("Skip existing files...");
                 }
 
+                // Download meta info
                 foreach (BlobInfo blob in blobs)
                 {
                     // Create root directory folders
@@ -61,25 +63,48 @@ namespace UmaMusumeToolbox.DataDownload
                         continue;
                     }
                     
-                    tasks.Add(resource.DownloadFileAsync(blob.Hash, blob.Type, destinationFilepath));
+                    // Queue up the download
+                    downloadTasks.Add(resource.DownloadFileAsync(blob.Hash, blob.Type, destinationFilepath));
                     numFiles++;
 
                     // Limit to 200 concurrent downloads and wait until they're all done
-                    if (tasks.Count >= 200)
+                    if (downloadTasks.Count >= 200)
                     {
-                        Task.WaitAll(tasks.ToArray());
-                        tasks.Clear(); // prep for next batch
+                        Task.WaitAll(downloadTasks.ToArray());
+                        downloadTasks.Clear(); // prep for next batch
                         Console.WriteLine($"Completed {numFiles} of {blobs.Count} files");
                     }
                 }
 
-                Task.WaitAll(tasks.ToArray());
+                Task.WaitAll(downloadTasks.ToArray());
 
-                //using (var source = LZ4Stream.Decode(File.OpenRead(filename + ".lz4")))
-                //using (var target = File.Create(filename))
-                //{
-                //    source.CopyTo(target);
-                //}
+                List<string> lz4Files = blobs
+                    .Where(name => name.BlobPath.EndsWith(".lz4"))
+                    .Select(blob => blob.BlobPath)
+                    .ToList();
+
+                // Decode any LZ4 files
+                foreach (string lz4File in lz4Files)
+                {
+                    string filename = GetPlatformFriendlyFilepath(_userSavedData + DirectorySeparator + lz4File);
+                    int lastIndex = lz4File.LastIndexOf(DirectorySeparator);
+
+                    // Trim any path info
+                    if (lastIndex > 0)
+                    {
+                        filename = filename.Substring(lastIndex + 1);
+                    }
+
+                    using (LZ4DecoderStream source = LZ4Stream.Decode(File.OpenRead(filename)))
+                    {
+                        filename = filename.Replace(".lz4", "");
+                        using (FileStream target = File.Create(filename))
+                        {
+                            source.CopyTo(target);
+                            Console.WriteLine($"\n{lz4File} has been decoded!");
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
