@@ -1,7 +1,9 @@
 # Uma Musume: Pretty Derby Toolbox
 .NET CLI implementation of [Rockisch's umamusu-utils](https://github.com/rockisch/umamusu-utils) project. Thank you Rockisch! I couldn't have done this without your script!
 
-I have recreated the [`data_download.py`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/data_download.py) script and added a config file called, [`appsettings.json`](https://github.com/SimpleSandman/UmaMusumeToolbox/blob/master/UmaMusumeToolbox.DataDownload/appsettings.json). It's already in the repo if you want to check it out!
+I've recreated the [`data_download.py`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/data_download.py) script and added a config file called, [`appsettings.json`](https://github.com/SimpleSandman/UmaMusumeToolbox/blob/master/UmaMusumeToolbox.DataDownload/appsettings.json). It's already in this repo if you want to check it out!
+
+I've also added detailed error messages for easier troubleshooting because there are a few assets we can't download due to "forbidden" access (error code 403).
 
 The only non-configurable option that's different from Rockisch's script is that I have this process set to 200 concurrent (asynchronous) downloads. This works in batches. Meaning it won't move onto the next 200 assets until the current batch has finished downloading.
 
