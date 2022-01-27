@@ -19,7 +19,7 @@ I'll work on a VS code configuration and make this Linux friendly once I finish 
   - If set to `true`, this will only attempt to download missing files in the saved location you pointed this program to.
   - If set to `false`, this will download all of the files, regardless if they exist already.
 - TimeoutFromMinutes
-  - I personally have mine set to 5 minutes on a 5 MB/s download because the default 100 seconds didn't work for me for some of the bigger assets.
+  - This is the limit of how long a download can take before it times out. I personally have mine set to 5 minutes on a 5 MB/s download because the default 100 seconds that's built-in didn't work for me for some of the bigger assets.
 - UserSavedLocation
   - This is where your downloaded files will be stored. It will create the directory path if it doesn't exist. Make sure you have permission to the file path you've set this to. I picked the `%USERPROFILE%` location because its the current user's directory.
   - Example path: `C:\\Users\\<your_username>\\uma_storage`
