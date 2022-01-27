@@ -3,6 +3,8 @@
 
 I have recreated the [`data_download.py`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/data_download.py) script and added a config file called, [`appsettings.json`](https://github.com/SimpleSandman/UmaMusumeToolbox/blob/master/UmaMusumeToolbox.DataDownload/appsettings.json). It's already in the repo if you want to check it out!
 
+The only non-configurable option that's different from Rockisch's script is that I have this process set to 200 concurrent (asynchronous) downloads. This works in batches. Meaning it won't move onto the next 200 assets until the current batch has finished downloading.
+
 I'll work on a VS code configuration and make this Linux friendly once I finish what I need to do.
 
 # Config File Explanation
