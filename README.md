@@ -9,10 +9,18 @@ I've also added detailed error messages for easier troubleshooting because there
 
 NOTE: The only non-configurable option that's different from Rockisch's script is that I have this process set to 200 concurrent (asynchronous) downloads. This works in batches. Meaning it won't move onto the next 200 assets until the current batch has finished downloading.
 
-# TODOs
+# Initial Setup
 
-- Create a VS code configuration and make this Linux friendly.
-- Recreate the [`items_extract`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/items_extract.py) and [`story_extract`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/story_extract.py) scripts as separate projects within this solution.
+If you don't already have .NET 6 on your computer, you'll need to [download the latest](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) for either the ".NET Runtime" (to run the program) or the "SDK" (for building the solution and development).
+
+To check if you've installed it correctly, open either command prompt or terminal and use this command:
+```bash
+dotnet --version
+```
+
+If it returns with a version number of at least 6.0, you're good to run the program after you unzip it.
+
+One last thing I have to stress to you. SET UP THE `appsettings.json` FILE! By default, it's set up to my folder locations and I doubt you have a user profile name of "kento". I left it there as a working example so you don't have to assume anything. Check below for a further explanation of the config file.
 
 # Config File Explanation
 - IsDebugMode
@@ -32,3 +40,8 @@ NOTE: The only non-configurable option that's different from Rockisch's script i
 - UserSavedLocation
   - This is where your downloaded files will be stored. It will create the directory path if it doesn't exist. Make sure you have permission to the file path you've set this to. I picked the `%USERPROFILE%` location because its the current user's directory.
     - Example path: `C:\\Users\\<your_username>\\uma_storage`
+
+# TODO List
+
+- Create a VS code configuration and make this Linux friendly.
+- Recreate the [`items_extract`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/items_extract.py) and [`story_extract`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/story_extract.py) scripts as separate projects within this solution.
