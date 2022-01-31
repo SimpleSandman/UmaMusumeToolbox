@@ -3,9 +3,11 @@
 
 I've recreated the [`data_download.py`](https://github.com/rockisch/umamusu-utils/blob/master/scripts/data_download.py) script and added a config file called, [`appsettings.json`](https://github.com/SimpleSandman/UmaMusumeToolbox/blob/master/UmaMusumeToolbox.DataDownload/appsettings.json). It's already in this repo if you want to check it out!
 
+For those who don't know about the original project, this program will download the game's assets (models, videos, etc.) onto your computer for PERSONAL USE ONLY. You will want to use something like [Perfare's Asset Studio](https://github.com/Perfare/AssetStudio) to properly extract these files.
+
 I've also added detailed error messages for easier troubleshooting because there are a few assets we can't download due to "forbidden" access (error code 403). Though, I've noticed that re-running the program after a while can remedy this issue.
 
-The only non-configurable option that's different from Rockisch's script is that I have this process set to 200 concurrent (asynchronous) downloads. This works in batches. Meaning it won't move onto the next 200 assets until the current batch has finished downloading.
+NOTE: The only non-configurable option that's different from Rockisch's script is that I have this process set to 200 concurrent (asynchronous) downloads. This works in batches. Meaning it won't move onto the next 200 assets until the current batch has finished downloading.
 
 # TODOs
 
