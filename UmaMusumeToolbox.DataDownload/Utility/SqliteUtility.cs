@@ -2,7 +2,7 @@
 
 using UmaMusumeToolbox.DataDownload.Models;
 
-namespace UmaMusumeToolbox.DataDownload
+namespace UmaMusumeToolbox.DataDownload.Utility
 {
     public static class SqliteUtility
     {

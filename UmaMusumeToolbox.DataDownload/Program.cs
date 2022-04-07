@@ -5,6 +5,7 @@ using K4os.Compression.LZ4.Streams;
 using Microsoft.Extensions.Configuration;
 
 using UmaMusumeToolbox.DataDownload.Models;
+using UmaMusumeToolbox.DataDownload.Utility;
 
 namespace UmaMusumeToolbox.DataDownload
 {
@@ -112,7 +113,7 @@ namespace UmaMusumeToolbox.DataDownload
                 CloseProgram(1);
             }
 
-            Console.WriteLine("\nYay! We're done downloading! Check any errors above.");
+            Console.WriteLine("\nYay! We're done downloading! Check for any errors above.");
             CloseProgram();
         }
 

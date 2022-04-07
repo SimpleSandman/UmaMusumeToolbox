@@ -128,6 +128,7 @@ namespace UmaMusumeToolbox.DataDownload
                 // Output the pre-designated message instead of the standard exception message
                 if (ex.Message.Contains("The request was canceled due to the configured HttpClient.Timeout of"))
                 {
+                    Console.WriteLine("\n========== POSSIBLE WORKAROUNDS ==========\n");
                     Console.WriteLine($"The download for this file exceeded the {_settings.TimeoutFromMinutes} minute timeout. " +
                         "Please either restart the program or increase the timeout limit\n");
                 }
@@ -139,18 +140,21 @@ namespace UmaMusumeToolbox.DataDownload
                 if (ex.InnerException != null)
                 {
                     Console.WriteLine(ex.InnerException);
-                    if (ex.InnerException.Message == "The response ended prematurely.")
+
+                    if (ex.InnerException.Message.Contains("The response ended prematurely.")
+                        || ex.InnerException.Message.Contains("Unable to read data from the transport connection:"))
                     {
-                        Console.WriteLine("\n>>>>>>>>>> POSSIBLE WORKAROUND <<<<<<<<<<\n");
-                        Console.WriteLine("NOTE: This could be due to a 403 (forbidden) error killing the connection too early. " +
-                            "This can be validated with an API platform like Postman with the URL posted above this message.");
-                        Console.WriteLine("SUGGESTION: With a GET request, if Postman actually returns with a successful status code (like 200), " +
-                            "paste the URL in your browser and save it to the path listed above " +
-                            "so this program doesn't attempt to download this again");
-                        Console.WriteLine("\n>>>>>>>>>>>>>>>>>>>  <<<<<<<<<<<<<<<<<<<<\n");
+                        Console.WriteLine("\n========== POSSIBLE WORKAROUNDS ==========\n");
+                        Console.WriteLine("NOTE: This could be due to a 403 (forbidden) error killing the connection/download too early.");
+                        Console.WriteLine("- When this program has finished downloading, restart this program with \"SkipExistingFiles\": true in the \"appsettings.json\" config file " +
+                            "so you can simply download the missing files that received this error.");
+                        Console.WriteLine("- You can manually download this particular file by pasting the URL into your browser.");
+                        Console.WriteLine("- You can also also validate this with an API platform like \"Postman\" with the URL posted above this message");
                     }
                 }
-                
+
+                Console.WriteLine("\n==========================================\n");
+
                 return false;
             }
         }
