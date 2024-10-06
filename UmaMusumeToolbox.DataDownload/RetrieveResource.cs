@@ -4,7 +4,6 @@ namespace UmaMusumeToolbox.DataDownload
 {
     public class RetrieveResource
     {
-        private const string HOST_NAME = "https://prd-storage-umamusume.akamaized.net/dl/resources/";
         private const string ASSETS_ENDPOINT = "Windows/assetbundles/";
         private const string GENERIC_ENDPOINT = "Generic/";
         private const string MANIFEST_ENDPOINT = "Manifest/";
@@ -65,16 +64,16 @@ namespace UmaMusumeToolbox.DataDownload
                     case "sound":
                     case "movie":
                     case "font":
-                        url = HOST_NAME + GENERIC_ENDPOINT;
+                        url = _settings.HostName + GENERIC_ENDPOINT;
                         break;
                     default:
-                        url = HOST_NAME + ASSETS_ENDPOINT;
+                        url = _settings.HostName + ASSETS_ENDPOINT;
                         break;
                 }
 
                 if (blobRowType.StartsWith("manifest"))
                 {
-                    url = HOST_NAME + MANIFEST_ENDPOINT;
+                    url = _settings.HostName + MANIFEST_ENDPOINT;
                 }
 
                 return string.Concat(url, hash.AsSpan(0, 2), "/", hash);
