@@ -1,9 +1,6 @@
-﻿using System.Runtime.InteropServices;
-
-using K4os.Compression.LZ4.Streams;
-
+﻿using K4os.Compression.LZ4.Streams;
 using Microsoft.Extensions.Configuration;
-
+using System.Runtime.InteropServices;
 using UmaMusumeToolbox.DataDownload.Models;
 using UmaMusumeToolbox.DataDownload.Utility;
 
@@ -12,11 +9,11 @@ namespace UmaMusumeToolbox.DataDownload
     public class Program
     {
         private static string _userSavedData = "";
-        private static Settings _settings = new Settings();
+        private static Settings _settings = new();
 
         public static char DirectorySeparator { get; private set; } = '/';
 
-        static void Main(string[] args)
+        static void Main()
         {
             try
             {
@@ -26,7 +23,7 @@ namespace UmaMusumeToolbox.DataDownload
                     .Build();
 
                 _settings = config.GetRequiredSection("Settings").Get<Settings>();
-                RetrieveResource resource = new RetrieveResource(_settings);
+                RetrieveResource resource = new(_settings);
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
@@ -36,7 +33,7 @@ namespace UmaMusumeToolbox.DataDownload
 
                 string connectionString = GetPlatformFriendlyFilepath(_settings.MetaDbFilepath);
                 List<BlobInfo> blobs = SqliteUtility.GetAllBlobInfo(connectionString);
-                List<Task> downloadTasks = new List<Task>();
+                List<Task> downloadTasks = [];
                 int numFiles = 0;
 
                 Console.WriteLine("Starting download...");

@@ -1,5 +1,4 @@
 ﻿using System.Data.SQLite;
-
 using UmaMusumeToolbox.DataDownload.Models;
 
 namespace UmaMusumeToolbox.DataDownload.Utility
@@ -14,9 +13,9 @@ namespace UmaMusumeToolbox.DataDownload.Utility
         /// <see cref="BlobInfo.Hash"/>, and <see cref="BlobInfo.Type"/></returns>
         public static List<BlobInfo> GetAllBlobInfo(string connectionString)
         {
-            List<BlobInfo> listBlobInfo = new List<BlobInfo>();
+            List<BlobInfo> listBlobInfo = [];
 
-            using (SQLiteConnection connection = new SQLiteConnection($"Data Source={connectionString}"))
+            using (SQLiteConnection connection = new($"Data Source={connectionString}"))
             {
                 connection.Open();
 

@@ -8,7 +8,7 @@ namespace UmaMusumeToolbox.DataDownload
         private const string GENERIC_ENDPOINT = "Generic/";
         private const string MANIFEST_ENDPOINT = "Manifest/";
         private readonly Settings _settings;
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient = new();
 
         public RetrieveResource(Settings settings)
         {
@@ -18,7 +18,7 @@ namespace UmaMusumeToolbox.DataDownload
 
         /// <summary>
         /// Call the endpoint using the <paramref name="hash"/> and if the endpoint returns successfully, 
-        /// download the file to the <paramref name="destinationFilepath"/>
+        /// download the file to the destination filepath
         /// </summary>
         /// <param name="hash"></param>
         /// <param name="type"></param>
@@ -49,8 +49,8 @@ namespace UmaMusumeToolbox.DataDownload
         /// <summary>
         /// Create the endpoint URL used to download a resource
         /// </summary>
-        /// <param name="blobRowType">What type of BLOB is being downloaded</param>
         /// <param name="hash">The ID of the resource</param>
+        /// <param name="blobRowType">What type of BLOB is being downloaded</param>
         /// <returns>Complete endpoint URL ready for download</returns>
         private string BuildEndpointUrl(string hash, string blobRowType)
         {
