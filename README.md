@@ -11,24 +11,25 @@ NOTE: The only non-configurable option that's different from Rockisch's script i
 
 # Initial Setup
 
-If you don't already have .NET 6 on your computer, you'll need to [download the latest](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) for either the ".NET Runtime" (to run the program) or the "SDK" (for building the solution and development).
+If you don't already have .NET 8 on your computer, you'll need to [download the latest](https://dotnet.microsoft.com/en-us/download/dotnet) for either the ".NET Runtime" (to run the program) or the "SDK" (for building the solution and development).
 
 To check if you've installed it correctly, open either command prompt or terminal and use this command:
 ```bash
 dotnet --version
 ```
 
-If it returns with a version number of at least 6.0, you're good to run the program after you unzip it.
+If it returns with a version number of at least 8.0, you're good to run the program after you unzip it.
 
-One last thing I have to stress to you. SET UP THE `appsettings.json` FILE! By default, it's set up to my folder locations and I doubt you have a user profile name of "kento". I left it there as a working example so you don't have to assume anything. Check below for a further explanation of the config file.
+One last thing I have to stress, **SET UP THE `appsettings.json` FILE!** By default, it's set up to my folder locations and I doubt you have a user profile name of "kento". I left it there as a working example so you don't have to assume anything. Check below for a further explanation of the configuration file.
 
-# Config File Explanation
+After you have set up the configuration file, you can run the `UmaMusumeToolbox.DataDownload.exe`
+
+# Configuration File Explanation
 - IsDebugMode
   - If set to `true`, this will output additional info in your console, specifically when it is downloading a single file and has finished downloading that file. Creates a lot of text on the screen, but if you want to keep a closer eye on the progress, this is here for you.
   - If set to `false`, then all you see are error messages and "complete X of Y files". The progress message will only show up when it's taking on another batch of files.
-- MasterDbFilepath
-  - This file is the core of where all of the data is stored for this game. Typically on a Windows machine using DMM, the `master.mdb` file is stored in the path below. The reason for the double backslash `\\` is to "escape" the backslash character. Please don't forget this if you're using a Windows machine!
-    - Typical path: `C:\\Users\\<your_username>\\AppData\\LocalLow\\Cygames\\umamusume\\master\\master.mdb`
+- HostName
+  - If the hosted server ever changes, you can now configure this setting without having to recompile the code.
 - MetaDbFilepath
   - This file is the meta file to grab the assets of the game. Please read above why the `\\` exist in this example.
     - Typical path: `C:\\Users\\<your_username>\\AppData\\LocalLow\\Cygames\\umamusume\\meta`
@@ -40,6 +41,14 @@ One last thing I have to stress to you. SET UP THE `appsettings.json` FILE! By d
 - UserSavedLocation
   - This is where your downloaded files will be stored. It will create the directory path if it doesn't exist. Make sure you have permission to the file path you've set this to. I picked the `%USERPROFILE%` location because its the current user's directory.
     - Example path: `C:\\Users\\<your_username>\\uma_storage`
+
+# Troubleshooting
+
+If you get any error messages related to networking, these options may help you.
+
+- When this program has finished downloading, restart this program with `"SkipExistingFiles": true` in the `appsettings.json` config file so you can simply download the missing files that received this error.
+- You can manually download this particular file by pasting the URL into your browser.
+- You can also also validate this with an API platform like "Postman" with the URL posted above the error message.
 
 # TODO List
 
